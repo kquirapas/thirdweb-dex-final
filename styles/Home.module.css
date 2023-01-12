@@ -117,3 +117,35 @@
 .logo img {
   filter: invert(1);
 }
+
+/* DEX Styling */
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.dex {
+  color: black;
+  background-color: white;
+  width: 100%;
+  max-width: 800px;
+  padding: 2em;
+}
+
+.display {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wFull{
+  width: 100%;
+}
+
+.textCenter {
+  text-align: center;
+}

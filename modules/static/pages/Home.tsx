@@ -1,6 +1,14 @@
-import { ConnectWallet, useContract, useContractRead } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
 
+import {
+  ConnectWallet,
+  useContract,
+  useContractRead,
+} from "@thirdweb-dev/react";
+
+import styles from "styles/Home.module.css";
 import { HTMLHead } from "modules/common";
+import { useDex, useDexToken } from "modules/utils";
 
 export const Head: React.FC = () => (
   <HTMLHead>
@@ -9,19 +17,53 @@ export const Head: React.FC = () => (
 );
 
 export const Body: React.FC = () => {
-  const { contract } = useContract(
-    "0x5536Fc1eb2D03F5c1cE4AF4bb7D8B48641f3a48a"
-  );
+  const {
+    name,
+    flip,
+    getEtherBalance,
+    getTokenBalance,
+    getLPTokenBalance,
+    toEth,
+  } = useDex();
 
-  const { data, isLoading, error } = useContractRead(
-    contract,
-    "getTokensInContract"
-  );
+  const { tokenSymbol } = useDexToken();
+
+  const [pair, setPair] = useState({
+    from: { amount: 0, symbol: "ETH" },
+    to: { amount: 0, symbol: tokenSymbol },
+  });
+
+  useEffect(() => {
+    (async () => {})();
+  }, []);
+
+  useEffect(() => {
+    setPair({
+      from: { amount: 0, symbol: "ETH" },
+      to: { amount: 0, symbol: tokenSymbol },
+    });
+  }, [tokenSymbol]);
 
   return (
-    <main>
-	  <p>IM HERE</p>
-      <div>{data}</div>
+    <main className={styles.wrapper}>
+      <div className={styles.dex}>
+        {
+          <>
+            <p className={styles.textCenter + styles.wFull}>{name}</p>
+            <div className={styles.display}>
+              <span>{pair.from.amount}</span>
+              <span>{pair.from.symbol}</span>
+            </div>
+            <span>^v</span>
+            <div className={styles.display}>
+              <span>{pair.to.amount}</span>
+              <span>{pair.to.symbol}</span>
+            </div>
+            <div></div>
+            <ConnectWallet />
+          </>
+        }
+      </div>
     </main>
   );
 };
